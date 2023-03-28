@@ -27,7 +27,7 @@ export const Absensi = () => {
           <p className="mt-[30px] hidden text-center lg:block">
             Event: eventName
           </p>
-          <form className="mt-[30px] flex flex-col lg:mt-[60px]">
+          <form className="mt-[30px] flex flex-col pb-[60px] lg:mt-[60px] lg:pb-0">
             <label
               htmlFor="fullName"
               className="font-normal lg:text-[16px] lg:leading-[120%]"
