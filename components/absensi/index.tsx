@@ -1,3 +1,4 @@
+import { Arrow } from "@/svgs/arrow";
 import Image from "next/image";
 
 export const Absensi = () => {
@@ -39,7 +40,7 @@ export const Absensi = () => {
               className="mt-[6px] rounded-[20px] p-3 lg:mt-[10px]"
             />
             <label
-              htmlFor="fullName"
+              htmlFor="email"
               className="mt-[20px] font-normal lg:mt-[30px] lg:text-[16px] lg:leading-[120%]"
             >
               Email
@@ -49,7 +50,7 @@ export const Absensi = () => {
               className="mt-[6px] rounded-[20px] p-3 lg:mt-[10px]"
             />
             <label
-              htmlFor="fullName"
+              htmlFor="institution"
               className="mt-[20px] font-normal lg:mt-[30px] lg:text-[16px] lg:leading-[120%]"
             >
               Institution
@@ -59,15 +60,22 @@ export const Absensi = () => {
               className="mt-[6px] rounded-[20px] p-3 lg:mt-[10px]"
             />
             <label
-              htmlFor="fullName"
+              htmlFor="role"
               className="mt-[20px] font-normal lg:mt-[30px] lg:text-[16px] lg:leading-[120%]"
             >
               Role
             </label>
-            <input
-              type="text"
-              className="mt-[6px] rounded-[20px] p-3 lg:mt-[10px]"
-            />
+            <div className="relative">
+              <select className="mt-[6px] w-full appearance-none rounded-[20px] p-3 lg:mt-[10px]">
+                <option value="" selected></option>
+                <option value="Student">Student</option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Other">Other</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 pt-1 lg:pt-2 lg:pr-4">
+                <Arrow />
+              </div>
+            </div>
             <button className="mt-[20px] rounded-[20px] bg-ribbon-600 p-3 text-white lg:mt-[30px]">
               Submit
             </button>
