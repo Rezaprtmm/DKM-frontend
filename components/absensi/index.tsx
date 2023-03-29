@@ -1,5 +1,4 @@
-import { Arrow } from "@/svgs/arrow";
-import Image from "next/image";
+import Image from "next/image"
 
 export const Absensi = () => {
   return (
@@ -73,7 +72,14 @@ export const Absensi = () => {
                 <option value="Other">Other</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 pt-1 lg:pt-2 lg:pr-4">
-                <Arrow />
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M7 10l5 5 5-5z" fill="#000" />
+                </svg>
               </div>
             </div>
             <button className="mt-[20px] rounded-[20px] bg-ribbon-600 p-3 text-white lg:mt-[30px]">
@@ -83,5 +89,5 @@ export const Absensi = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
