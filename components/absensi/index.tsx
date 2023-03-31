@@ -1,6 +1,42 @@
 import Image from "next/image"
+import axios from "axios"
+import { useState } from "react"
 
 export const Absensi = () => {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [inst, setInst] = useState("")
+  const [role, setRole] = useState("")
+
+  const handleName = (e) => setName(e.target.value)
+
+  const handleEmail = (e) => setEmail(e.target.value)
+
+  const handleInst = (e) => setInst(e.target.value)
+
+  const handleRole = (e) => setRole(e.target.value)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await fetch("/api/saveData", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, inst, role }),
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        console.log(result.message)
+      } else {
+        console.log("Terjadi kesalahan")
+      }
+    } catch (error) {
+      console.error(error)
+      console.log("Terjadi kesalahan saat menyimpan data")
+    }
+  }
   return (
     <div className="w-full bg-primary-500 lg:h-[100vh]">
       <div className="container mx-auto block px-6 lg:flex lg:w-full">
@@ -27,7 +63,10 @@ export const Absensi = () => {
           <p className="mt-[30px] hidden text-center lg:block">
             Event: eventName
           </p>
-          <form className="mt-[30px] flex flex-col pb-[60px] lg:mt-[60px] lg:pb-0">
+          <form
+            className="mt-[30px] flex flex-col pb-[60px] lg:mt-[60px] lg:pb-0"
+            onSubmit={handleSubmit}
+          >
             <label
               htmlFor="fullName"
               className="font-normal lg:text-[16px] lg:leading-[120%]"
@@ -36,6 +75,8 @@ export const Absensi = () => {
             </label>
             <input
               type="text"
+              value={name}
+              onChange={handleName}
               className="mt-[6px] rounded-[20px] p-3 lg:mt-[10px]"
             />
             <label
@@ -46,6 +87,8 @@ export const Absensi = () => {
             </label>
             <input
               type="text"
+              value={email}
+              onChange={handleEmail}
               className="mt-[6px] rounded-[20px] p-3 lg:mt-[10px]"
             />
             <label
@@ -56,6 +99,8 @@ export const Absensi = () => {
             </label>
             <input
               type="text"
+              value={inst}
+              onChange={handleInst}
               className="mt-[6px] rounded-[20px] p-3 lg:mt-[10px]"
             />
             <label
@@ -65,7 +110,11 @@ export const Absensi = () => {
               Role
             </label>
             <div className="relative">
-              <select className="mt-[6px] w-full appearance-none rounded-[20px] p-3 lg:mt-[10px]">
+              <select
+                className="mt-[6px] w-full appearance-none rounded-[20px] p-3 lg:mt-[10px]"
+                value={role}
+                onChange={handleRole}
+              >
                 <option value="" selected></option>
                 <option value="Student">Student</option>
                 <option value="Lecturer">Lecturer</option>
@@ -82,7 +131,10 @@ export const Absensi = () => {
                 </svg>
               </div>
             </div>
-            <button className="mt-[20px] rounded-[20px] bg-ribbon-600 p-3 text-white lg:mt-[30px]">
+            <button
+              className="mt-[20px] rounded-[20px] bg-ribbon-600 p-3 text-white lg:mt-[30px]"
+              type="submit"
+            >
               Submit
             </button>
           </form>
