@@ -1,12 +1,18 @@
 import Image from "next/image"
 import axios from "axios"
 import { useState } from "react"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 export const Absensi = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [inst, setInst] = useState("")
   const [role, setRole] = useState("")
+  const tempname = name.split(" ")
+  const namejoin = tempname.join("")
+  const regex = /\d+/g
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
   const handleName = (e) => setName(e.target.value)
 
@@ -19,22 +25,39 @@ export const Absensi = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    try {
-      const response = await fetch("/api/saveData", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, inst, role }),
-      })
+    if (name === "") {
+      toast.warning("Mohon isi nama Anda terlebih dahulu")
+    } else if (namejoin.match(regex)) {
+      toast.warning("Tidak menerima angka pada label nama Anda")
+    } else if (email === "") {
+      toast.warning("Mohon isi alamat email Anda terlebih dahulu")
+    } else if (!email.match(pattern)) {
+      toast.warning("Alamat email tidak valid")
+    } else if (inst === "") {
+      toast.warning("Mohon isi instansi Anda, jika tidak ada isi dengan '-'")
+    } else if (role === "") {
+      toast.warning("Mohon pilih status Anda terlebih dahulu")
+    } else if (name === "" || email === "" || inst === "" || role === "") {
+      toast.warning("Lengkapi data terlebih dahulu")
+    } else {
+      try {
+        const valEmail = email.toLowerCase()
+        const response = await fetch("/api/saveData", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, valEmail, inst, role }),
+        })
 
-      if (response.ok) {
-        const result = await response.json()
-        console.log(result.message)
-      } else {
-        console.log("Terjadi kesalahan")
+        if (response.ok) {
+          const result = await response.json()
+          console.log(result.message)
+        } else {
+          console.log("Terjadi kesalahan")
+        }
+      } catch (error) {
+        console.error(error)
+        console.log("Terjadi kesalahan saat menyimpan data")
       }
-    } catch (error) {
-      console.error(error)
-      console.log("Terjadi kesalahan saat menyimpan data")
     }
   }
   return (
@@ -137,6 +160,7 @@ export const Absensi = () => {
             >
               Submit
             </button>
+            <ToastContainer />
           </form>
         </div>
       </div>

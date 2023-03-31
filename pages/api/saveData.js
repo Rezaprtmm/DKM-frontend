@@ -10,7 +10,7 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 
 module.exports = async function handler(req, res) {
   try {
-    const { name, email, inst, role } = req.body
+    const { name, valEmail, inst, role } = req.body
     fs.readFile("credentials.json", (err, content) => {
       if (err) return console.log("Error loading client secret file:", err)
       authorize(JSON.parse(content), writeData)
@@ -44,11 +44,6 @@ module.exports = async function handler(req, res) {
       })
       await fs.writeFile(TOKEN_PATH, payload)
     }
-
-    /**
-     * Load or request or authorization to call APIs.
-     *
-     */
     /**
      * Prints the names and majors of students in a sample spreadsheet:
      * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
@@ -73,7 +68,7 @@ module.exports = async function handler(req, res) {
     function writeData(auth) {
       const sheets = google.sheets({ version: "v4", auth })
       let values = [
-        [name, email, inst, role],
+        [name, valEmail, inst, role],
         // Potential next row
       ]
       const resource = {
