@@ -54,6 +54,7 @@ export const Absensi = () => {
         } else {
           console.log("Terjadi kesalahan")
         }
+        toast.success("Registrasi berhasil!")
       } catch (error) {
         console.error(error)
         console.log("Terjadi kesalahan saat menyimpan data")
