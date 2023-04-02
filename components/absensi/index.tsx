@@ -11,7 +11,7 @@ export const Absensi = () => {
   const [role, setRole] = useState("")
   const tempname = name.split(" ")
   const namejoin = tempname.join("")
-  const regex = /\d+/g
+  const regex = /^[a-zA-Z\s]+$/
   const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
   const handleName = (e) => setName(e.target.value)
@@ -27,21 +27,21 @@ export const Absensi = () => {
 
     if (name === "") {
       toast.warning("Mohon isi nama Anda terlebih dahulu")
-    } else if (namejoin.match(regex)) {
-      toast.warning("Tidak menerima angka pada label nama Anda")
+    } else if (!namejoin.match(regex)) {
+      toast.warning("Tidak menerima simbol dan angka pada kolom nama")
     } else if (email === "") {
       toast.warning("Mohon isi alamat email Anda terlebih dahulu")
     } else if (!email.match(pattern)) {
       toast.warning("Alamat email tidak valid")
     } else if (inst === "") {
-      toast.warning("Mohon isi instansi Anda, jika tidak ada isi dengan '-'")
+      toast.warning("Mohon isi instansi Anda, jika tidak ada isi dengan (-)")
     } else if (role === "") {
       toast.warning("Mohon pilih status Anda terlebih dahulu")
     } else if (name === "" || email === "" || inst === "" || role === "") {
       toast.warning("Lengkapi data terlebih dahulu")
     } else {
       try {
-        toast.success("Registrasi berhasil!")
+        toast.success("Registrasi berhasil! Mohon cek email Anda.")
         const valEmail = email.toLowerCase()
         const response = await fetch("/api/saveData", {
           method: "POST",
