@@ -6,9 +6,7 @@ const process = require("process")
 const { google } = require("googleapis")
 const { authenticate } = require("@google-cloud/local-auth")
 const sgMail = require("@sendgrid/mail")
-sgMail.setApiKey(
-  "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"
-)
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 const TOKEN_PATH = path.join(process.cwd(), "./token.json")
 const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
@@ -41,7 +39,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const data = name + "," + valEmail
+    const data = name + "," + valEmail + "," + inst + "," + role + "," + regDate
     QRCode.toFile(
       path.join(__dirname, `${frName[0]}-qr.png`),
       data,
