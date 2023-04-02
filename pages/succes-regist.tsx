@@ -1,6 +1,6 @@
-import { Success } from "@/svgs/success";
-import Image from "next/image";
-import Link from "next/link";
+import { Success } from "@/svgs/success"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function SuccesRegist() {
   return (
@@ -57,5 +57,5 @@ export default function SuccesRegist() {
         </div>
       </div>
     </div>
-  );
+  )
 }

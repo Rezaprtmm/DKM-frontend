@@ -1,8 +1,9 @@
 import Image from "next/image"
 import axios from "axios"
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { useRouter } from "next/router"
 
 export const Absensi = () => {
   const [name, setName] = useState("")
@@ -13,16 +14,21 @@ export const Absensi = () => {
   const namejoin = tempname.join("")
   const regex = /^[a-zA-Z\s]+$/
   const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const router = useRouter()
 
-  const handleName = (e) => setName(e.target.value)
+  const handleName = (e: { target: { value: SetStateAction<string> } }) =>
+    setName(e.target.value)
 
-  const handleEmail = (e) => setEmail(e.target.value)
+  const handleEmail = (e: { target: { value: SetStateAction<string> } }) =>
+    setEmail(e.target.value)
 
-  const handleInst = (e) => setInst(e.target.value)
+  const handleInst = (e: { target: { value: SetStateAction<string> } }) =>
+    setInst(e.target.value)
 
-  const handleRole = (e) => setRole(e.target.value)
+  const handleRole = (e: { target: { value: SetStateAction<string> } }) =>
+    setRole(e.target.value)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
     if (name === "") {
@@ -41,7 +47,7 @@ export const Absensi = () => {
       toast.warning("Lengkapi data terlebih dahulu")
     } else {
       try {
-        toast.success("Registrasi berhasil! Mohon cek email Anda.")
+        router.push("/succes-regist")
         const valEmail = email.toLowerCase()
         const response = await fetch("/api/saveData", {
           method: "POST",
