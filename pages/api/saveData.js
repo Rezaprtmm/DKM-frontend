@@ -3,10 +3,11 @@ const fss = require("fs")
 const path = require("path")
 const QRCode = require("qrcode")
 const process = require("process")
+const nodemailer = require("nodemailer")
 const { google } = require("googleapis")
 const { authenticate } = require("@google-cloud/local-auth")
-const sgMail = require("@sendgrid/mail")
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+// const sgMail = require("@sendgrid/mail")
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 const TOKEN_PATH = path.join(process.cwd(), "./token.json")
 const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
@@ -54,30 +55,37 @@ module.exports = async function handler(req, res) {
         if (err) throw err
         console.log("QR code saved to file!")
 
-        // Send email with attachment
-        const msg = {
+        // Konfigurasi transporter email
+        let transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: "dkm.tekno@gmail.com",
+            pass: "bxktqhnaumcfichf",
+          },
+        })
+
+        // Konfigurasi email yang akan dikirim
+        let mailOptions = {
+          from: "dkm.tekno@gmail.com",
           to: valEmail,
-          from: "reza.maulana@students.paramadina.ac.id",
-          subject: "Registrasi Anda Berhasil.",
-          text:
-            "Halo, " +
-            name +
-            "! Terima kasih telah mendaftar di acara ini, berikut terlampir QR Code yang harus kamu tunjukkan ke meja registrasi nanti yaa! Kami tunggu kehadiranmu :)",
+          subject: "Registrasi Anda berhasil!",
+          text: `Halo, ${name}! Terima kasih telah mendaftar di acara Bedah Buku. Berikut terlampir QR Code yang harus Anda scan pada saat menghadiri acara. Kami tunggu kehadiranmu :)`,
           attachments: [
             {
-              content: fss
-                .readFileSync(path.join(__dirname, `${frName[0]}-qr.png`))
-                .toString("base64"),
               filename: `${frName[0]}-qr.png`,
-              type: "image/png",
-              disposition: "attachment",
+              path: path.join(__dirname, `${frName[0]}-qr.png`),
             },
           ],
         }
-        sgMail
-          .send(msg)
-          .then(() => console.log("Email sent successfully!"))
-          .catch((error) => console.error(error.toString()))
+
+        // Kirim email
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error)
+          } else {
+            console.log("Email sent: " + info.response)
+          }
+        })
       }
     )
 

@@ -36,7 +36,7 @@ export default function SuccesRegist() {
           <div className="flex justify-center">
             <div className="z-10 flex h-[600px] w-[327px] flex-col items-center justify-center rounded-[20px] bg-white text-center lg:h-[490px] lg:w-[1030px]">
               <h1 className="text-[21px] leading-[120%] text-ribbon-600 lg:text-[36px] lg:font-semibold lg:leading-[120%]">
-                Registration Successfully
+                Registration Successful!
               </h1>
               <div className="mt-[40px] flex items-center justify-center lg:mt-[40px]">
                 <Success />
@@ -44,7 +44,8 @@ export default function SuccesRegist() {
               <p className="mt-[40px] text-[16px] font-normal leading-[120%] lg:mt-[40px] lg:text-[16px] lg:font-semibold lg:leading-[120%]">
                 You are registered in the DKM event &quot;Book Review: Ber-Islam
                 Secara <br className="hidden lg:block" /> Kaffah&quot; please
-                check your email for more information.
+                check your email for further information. <br></br>If you don't
+                found it, please check in spam also.
               </p>
               <Link
                 href="#"
