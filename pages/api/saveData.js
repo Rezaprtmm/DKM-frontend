@@ -68,8 +68,20 @@ module.exports = async function handler(req, res) {
         let mailOptions = {
           from: "dkm.tekno@gmail.com",
           to: valEmail,
-          subject: "Registrasi Anda berhasil!",
-          text: `Halo, ${name}! Terima kasih telah mendaftar di acara Bedah Buku. Berikut terlampir QR Code yang harus Anda scan pada saat menghadiri acara. Kami tunggu kehadiranmu :)`,
+          subject: "Informasi Registrasi Acara ${eventName} ",
+          text: `Kepada Yth. Saudara/i ${name},
+
+          Kami mengucapkan terima kasih atas partisipasi Saudara/i dalam acara $eventName yang akan dilaksanakan pada $eventDate di Universitas Paramadina Kampus Gatot Subroto. Kami sangat senang dapat menyambut kehadiran Saudara/i pada acara tersebut.
+          
+          Melalui email ini, kami ingin mengonfirmasi bahwa pendaftaran Saudara/i pada acara $eventName telah berhasil kami terima. Berikut terlampir QR Code yang harus Saudara/i tunjukkan ke meja registrasi.
+          
+          Apabila Saudara/i memiliki pertanyaan atau butuh bantuan sehubungan dengan acara $eventName, jangan ragu untuk menghubungi kami melalui:
+          e-mail  : muhamad.fatih@students.paramadina.ac.id, atau
+          WhatsApp: 0821-2248-4581 (Muhamad Adillah Fatih).
+          
+          Terima kasih,
+          
+          Tim IT Support DKM Paramadina`,
           attachments: [
             {
               filename: `${frName[0]}-qr.png`,
