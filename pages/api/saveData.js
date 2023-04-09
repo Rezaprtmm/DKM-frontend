@@ -68,7 +68,7 @@ module.exports = async function handler(req, res) {
         let mailOptions = {
           from: "dkm.tekno@gmail.com",
           to: valEmail,
-          subject: "Informasi Registrasi Acara ${eventName} ",
+          subject: "Konfirmasi Registrasi Acara ${eventName} ",
           text: `Kepada Yth. Saudara/i ${name},
 
           Kami mengucapkan terima kasih atas partisipasi Saudara/i dalam acara $eventName yang akan dilaksanakan pada $eventDate di Universitas Paramadina Kampus Gatot Subroto. Kami sangat senang dapat menyambut kehadiran Saudara/i pada acara tersebut.
