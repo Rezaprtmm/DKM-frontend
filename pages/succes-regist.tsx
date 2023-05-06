@@ -44,8 +44,8 @@ export default function SuccesRegist() {
               <p className="mt-[40px] text-[16px] font-normal leading-[120%] lg:mt-[40px] lg:text-[16px] lg:font-semibold lg:leading-[120%]">
                 You are registered in the DKM event &quot;Book Review: Ber-Islam
                 Secara <br className="hidden lg:block" /> Kaffah&quot; please
-                check your email for further information. <br></br>If you don't
-                found it, please check in spam also.
+                check your email for further information. <br></br>If you
+                don&apos;t found it, please check in spam also.
               </p>
               <Link
                 href="#"
