@@ -47,7 +47,6 @@ export const Absensi = () => {
       toast.warning("Lengkapi data terlebih dahulu")
     } else {
       try {
-        router.push("/succes-regist")
         const valEmail = email.toLowerCase()
         const response = await fetch("/api/saveData", {
           method: "POST",
@@ -57,9 +56,8 @@ export const Absensi = () => {
 
         if (response.ok) {
           const result = await response.json()
+          router.push("/succes-regist")
           console.log(result.message)
-        } else {
-          console.log("Terjadi kesalahan")
         }
       } catch (error) {
         console.error(error)
