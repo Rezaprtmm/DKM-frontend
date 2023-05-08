@@ -56,9 +56,9 @@ export const Absensi = () => {
 
         if (response.ok) {
           const result = await response.json()
-          router.push("/succes-regist")
           console.log(result.message)
         }
+        router.push("/succes-regist")
       } catch (error) {
         console.error(error)
         console.log("Terjadi kesalahan saat menyimpan data")
