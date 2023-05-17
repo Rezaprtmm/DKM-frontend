@@ -46,23 +46,29 @@ export const Absensi = () => {
     } else if (name === "" || email === "" || inst === "" || role === "") {
       toast.warning("Lengkapi data terlebih dahulu")
     } else {
-      try {
-        const valEmail = email.toLowerCase()
-        const response = await fetch("/api/testof-saveData", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, valEmail, inst, role }),
-        })
+      const valEmail = email.toLowerCase()
+      const response = await fetch("/api/testof-saveData", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, valEmail, inst, role }),
+      })
+        .then(function (response) {
+          // first then()
+          if (response.ok) {
+            return response.text()
+          }
 
-        if (response.ok) {
-          const result = await response.json()
-          console.log(result.message)
-        }
-        router.push("/succes-regist")
-      } catch (error) {
-        console.error(error)
-        console.log("Terjadi kesalahan saat menyimpan data")
-      }
+          throw new Error("Something went wrong.")
+        })
+        .then(function (text) {
+          // second then()
+          console.log("Request successful", text)
+        })
+        .catch(function (error) {
+          // catch
+          console.log("Request failed", error)
+        })
+      router.push("/succes-regist")
     }
   }
   return (
