@@ -15,7 +15,6 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 module.exports = async function handler(req, res) {
   try {
     const { name, valEmail, inst, role } = req.body
-    const frName = name.split(" ")
     const now = new Date()
     const regDate = now.toLocaleString("id-ID", {
       day: "2-digit",
@@ -25,6 +24,30 @@ module.exports = async function handler(req, res) {
       minute: "2-digit",
       second: "2-digit",
     })
+
+    // Offload processing
+    offloadProcess(name, valEmail, inst, role, regDate)
+      .then(() => {
+        console.log("Processing offloaded successfully")
+      })
+      .catch((error) => {
+        console.error("Error offloading processing:", error)
+      })
+
+    res.status(200).json({ message: "Processing initiated" })
+  } catch (error) {
+    console.error("Error processing data:", error)
+    res.status(500).json({ error: "Internal Server Error" })
+  }
+}
+
+async function offloadProcess(name, valEmail, inst, role, regDate) {
+  try {
+    const frName = name.split(" ")
+    // Your offloading process logic here
+    console.log("Offloading process started")
+    // ...
+
     fs.readFile("credentials.json", (err, content) => {
       if (err) return console.log("Error loading client secret file:", err)
       authorize(JSON.parse(content), writeData)
@@ -171,9 +194,9 @@ module.exports = async function handler(req, res) {
       )
     }
     authorize().then(writeData).catch(console.error)
+    console.log("Offloading process completed")
   } catch (error) {
-    console.error(error)
-    console.log("Terjadi kesalahan saat menyimpan data")
-    return false
+    console.error("Error in offloading process:", error)
+    throw error
   }
 }
