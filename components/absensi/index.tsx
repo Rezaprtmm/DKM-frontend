@@ -50,6 +50,7 @@ export const Absensi = () => {
       const response = await fetch("/api/testof-saveData", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        mode: "cors",
         body: JSON.stringify({ name, valEmail, inst, role }),
       })
         .then(function (response) {
