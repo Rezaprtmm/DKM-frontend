@@ -48,7 +48,7 @@ export const Absensi = () => {
     } else {
       try {
         const valEmail = email.toLowerCase()
-        const response = await fetch("/api/saveData.js", {
+        const response = await fetch("/api/saveData", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, valEmail, inst, role }),
