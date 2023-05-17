@@ -13,6 +13,7 @@ const TOKEN_PATH = path.join(process.cwd(), "./token.json")
 const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 
 module.exports = async function handler(req, res) {
+  req.setTimeout(30000)
   try {
     const { name, valEmail, inst, role } = req.body
     const frName = name.split(" ")
