@@ -13,31 +13,51 @@ const TOKEN_PATH = path.join(process.cwd(), "./token.json")
 const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 
 module.exports = async function handler(req, res) {
-  try {
-    const { name, valEmail, inst, role } = req.body
-    const now = new Date()
-    const regDate = now.toLocaleString("id-ID", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    })
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://dkm-paramadina.vercel.app/"
+  )
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type")
 
-    // Offload processing
-    offloadProcess(name, valEmail, inst, role, regDate)
-      .then(() => {
-        console.log("Processing offloaded successfully")
-      })
-      .catch((error) => {
-        console.error("Error offloading processing:", error)
+  // Handle requests
+  if (req.method === "OPTIONS") {
+    // Respond to pre-flight requests
+    res.writeHead(200)
+    res.end()
+  } else if (req.method === "POST" && req.url === "/api/testof-saveData") {
+    try {
+      const { name, valEmail, inst, role } = req.body
+      const now = new Date()
+      const regDate = now.toLocaleString("id-ID", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
       })
 
-    res.status(200).json({ message: "Processing initiated" })
-  } catch (error) {
-    console.error("Error processing data:", error)
-    res.status(500).json({ error: "Internal Server Error" })
+      // Offload processing
+      offloadProcess(name, valEmail, inst, role, regDate)
+        .then(() => {
+          console.log("Processing offloaded successfully")
+        })
+        .catch((error) => {
+          console.error("Error offloading processing:", error)
+        })
+
+      res.status(200).json({ message: "Processing initiated" })
+    } catch (error) {
+      console.error("Error processing data:", error)
+      res.status(500).json({ error: "Internal Server Error" })
+      console.error("Error in offloading process:", error)
+      throw error
+    }
+  } else {
+    // Handle other requests
+    res.writeHead(404)
+    res.end()
   }
 }
 
@@ -195,8 +215,10 @@ async function offloadProcess(name, valEmail, inst, role, regDate) {
     }
     authorize().then(writeData).catch(console.error)
     console.log("Offloading process completed")
+
+    res.status(200).json({ message: "Data saved successfully" })
   } catch (error) {
-    console.error("Error in offloading process:", error)
-    throw error
+    console.error(error)
+    res.status(500).json({ error: "Internal server error" })
   }
 }

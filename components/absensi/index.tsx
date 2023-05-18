@@ -58,7 +58,6 @@ export const Absensi = () => {
           if (response.ok) {
             return response.text()
           }
-
           throw new Error("Something went wrong.")
         })
         .then(function (text) {
