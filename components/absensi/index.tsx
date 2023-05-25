@@ -48,7 +48,7 @@ export const Absensi = () => {
     } else {
       const valEmail = email.toLowerCase()
       try {
-        const response = await axios.post("/api/testof-saveData", {
+        const response = await axios.post("/api/saveData", {
           name,
           valEmail,
           inst,
