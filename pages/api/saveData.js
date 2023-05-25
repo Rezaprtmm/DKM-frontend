@@ -15,8 +15,17 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 module.exports = async function handler(req, res) {
   try {
     const { name, valEmail, inst, role } = req.body
+    const head = "DKM-REG"
+    const min = 100000
+    const max = 999999
+    const noreg = Math.floor(Math.random() * (max - min) + min)
     const frName = name.split(" ")
     const now = new Date()
+    const tgl = now.toLocaleString("id-ID", {
+      day: "2-digit",
+    })
+    const tail =
+      tgl.toString() + noreg.toString() + now.getFullYear().toString()
     const regDate = now.toLocaleString("id-ID", {
       day: "2-digit",
       month: "2-digit",
@@ -40,7 +49,8 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const data = name + "," + valEmail + "," + inst + "," + role + "," + regDate
+    const data =
+      head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
     QRCode.toFile(
       path.join(__dirname, `${frName[0]}-qr.png`),
       data,

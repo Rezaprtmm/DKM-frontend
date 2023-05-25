@@ -10,6 +10,7 @@ export const Absensi = () => {
   const [email, setEmail] = useState("")
   const [inst, setInst] = useState("")
   const [role, setRole] = useState("")
+  const [setBtnAct, isSetBtnAct] = useState<boolean>(false)
   const tempname = name.split(" ")
   const namejoin = tempname.join("")
   const regex = /^[a-zA-Z\s]+$/
@@ -46,17 +47,23 @@ export const Absensi = () => {
     } else if (name === "" || email === "" || inst === "" || role === "") {
       toast.warning("Lengkapi data terlebih dahulu")
     } else {
-      const valEmail = email.toLowerCase()
-      try {
-        const response = await axios.post("/api/saveData", {
-          name,
-          valEmail,
-          inst,
-          role,
-        })
-        console.log(response.data)
-      } catch (error) {
-        console.error(error) // Handle any errors
+      if (setBtnAct == false) {
+        isSetBtnAct(true)
+        toast.warning("Harap cek kembali data Anda sebelum submit")
+      } else {
+        const valEmail = email.toLowerCase()
+        try {
+          router.push("/succes-regist")
+          const response = await axios.post("/api/saveData", {
+            name,
+            valEmail,
+            inst,
+            role,
+          })
+          console.log(response.data)
+        } catch (error) {
+          console.error(error) // Handle any errors
+        }
       }
 
       // const response = await axios.post("/api/testof-saveData", {
@@ -80,7 +87,6 @@ export const Absensi = () => {
       //   // catch
       //   console.log("Request failed", error)
       // })
-      router.push("/succes-regist")
     }
   }
   return (
@@ -177,12 +183,23 @@ export const Absensi = () => {
                 </svg>
               </div>
             </div>
-            <button
-              className="mt-[20px] rounded-[20px] bg-ribbon-600 p-3 text-white lg:mt-[30px]"
-              type="submit"
-            >
-              Submit
-            </button>
+            {!setBtnAct ? (
+              <button
+                className="mt-[20px] rounded-[20px] bg-ribbon-600 p-3 text-white lg:mt-[30px]"
+                type="submit"
+              >
+                Submit
+              </button>
+            ) : (
+              <button
+                className="mt-[20px] rounded-[20px]
+                bg-ribbon-600 p-3 text-white lg:mt-[30px]"
+                type="submit"
+              >
+                Submit
+              </button>
+            )}
+
             <ToastContainer />
           </form>
         </div>
