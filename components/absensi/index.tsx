@@ -54,40 +54,40 @@ export const Absensi = () => {
         const valEmail = email.toLowerCase()
         try {
           router.push("/succes-regist")
-          const response = await fetch("/api/testof-saveData", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            mode: "cors",
-            body: JSON.stringify({ name, valEmail, inst, role }),
+          // const response = await fetch("/api/testof-saveData", {
+          //   method: "POST",
+          //   headers: { "Content-Type": "application/json" },
+          //   mode: "cors",
+          //   body: JSON.stringify({ name, valEmail, inst, role }),
+          // })
+          //   .then(function (response) {
+          //     // first then()
+          //     if (response.ok) {
+          //       return response.text()
+          //     }
+          //     throw new Error("Something went wrong.")
+          //   })
+          //   .then(function (text) {
+          //     // second then()
+          //     console.log("Request successful", text)
+          //   })
+          //   .catch(function (error) {
+          //     // catch
+          //     console.log("Request failed", error)
+          //   })
+          const api = axios.create({
+            baseURL: "https://dkm-paramadina.vercel.app/", // Ganti dengan URL base API Anda
+            timeout: 5000, // Waktu maksimal (dalam milidetik) sebelum request dianggap timeout
+            headers: {
+              "Content-Type": "application/json",
+              // Anda dapat menambahkan header lain sesuai kebutuhan Anda
+            },
           })
-            .then(function (response) {
-              // first then()
-              if (response.ok) {
-                return response.text()
-              }
-              throw new Error("Something went wrong.")
-            })
-            .then(function (text) {
-              // second then()
-              console.log("Request successful", text)
-            })
-            .catch(function (error) {
-              // catch
-              console.log("Request failed", error)
-            })
         } catch (error) {
           console.error(error) // Handle any errors
         }
       }
 
-      const api = axios.create({
-        baseURL: "https://dkm-paramadina.vercel.app/", // Ganti dengan URL base API Anda
-        timeout: 5000, // Waktu maksimal (dalam milidetik) sebelum request dianggap timeout
-        headers: {
-          "Content-Type": "application/json",
-          // Anda dapat menambahkan header lain sesuai kebutuhan Anda
-        },
-      })
       // const response = await axios.post("/api/saveData", {
       //   name,
       //   valEmail,
