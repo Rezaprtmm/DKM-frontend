@@ -55,7 +55,7 @@ export const Absensi = () => {
         try {
           router.push("/succes-regist")
           const api = axios.create({
-            baseURL: "https://dkm-paramadina.vercel.app/", // Ganti dengan URL base API Anda
+            baseURL: "https://dkm-paramadina.vercel.app", // Ganti dengan URL base API Anda
             timeout: 5000, // Waktu maksimal (dalam milidetik) sebelum request dianggap timeout
             headers: {
               "Content-Type": "application/json",
