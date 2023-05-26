@@ -62,7 +62,7 @@ export const Absensi = () => {
               // Anda dapat menambahkan header lain sesuai kebutuhan Anda
             },
           })
-          api.post("/api/saveData", {
+          api.post("/api/testof-saveData", {
             name,
             valEmail,
             inst,
