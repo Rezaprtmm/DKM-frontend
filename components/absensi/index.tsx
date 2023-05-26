@@ -166,8 +166,11 @@ export const Absensi = () => {
                 className="mt-[6px] w-full appearance-none rounded-[20px] p-3 lg:mt-[10px]"
                 value={role}
                 onChange={handleRole}
+                defaultValue=""
               >
-                <option value="" selected></option>
+                <option value="" disabled>
+                  -- Pilih Role --
+                </option>
                 <option value="Student">Student</option>
                 <option value="Lecturer">Lecturer</option>
                 <option value="Other">Other</option>
