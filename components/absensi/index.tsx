@@ -79,6 +79,15 @@ export const Absensi = () => {
           console.error(error) // Handle any errors
         }
       }
+
+      const api = axios.create({
+        baseURL: "https://dkm-paramadina.vercel.app/", // Ganti dengan URL base API Anda
+        timeout: 5000, // Waktu maksimal (dalam milidetik) sebelum request dianggap timeout
+        headers: {
+          "Content-Type": "application/json",
+          // Anda dapat menambahkan header lain sesuai kebutuhan Anda
+        },
+      })
       // const response = await axios.post("/api/saveData", {
       //   name,
       //   valEmail,
