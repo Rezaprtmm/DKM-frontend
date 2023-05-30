@@ -98,7 +98,7 @@ export const Absensi = () => {
               console.log("Request failed", error)
             })
 
-          const apis = await fetch("/api/iseng", {
+          const apis = await fetch("/api/spread", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
