@@ -54,20 +54,26 @@ export const Absensi = () => {
         const valEmail = email.toLowerCase()
         try {
           router.push("/succes-regist")
-          const api = axios.create({
-            baseURL: "https://dkm-paramadina.vercel.app", // Ganti dengan URL base API Anda
-            timeout: 3000, // Waktu maksimal (dalam milidetik) sebelum request dianggap timeout
-            headers: {
-              "Content-Type": "application/json",
-              // Anda dapat menambahkan header lain sesuai kebutuhan Anda
-            },
-          })
-          api.post("/api/testof-saveData", {
-            name,
-            valEmail,
-            inst,
-            role,
-          })
+          const api = axios
+            .post("/api/iseng", {
+              name,
+              valEmail,
+              inst,
+              role,
+            })
+            .then((response) => {
+              console.log(response.data) // Menampilkan respon dari server
+            })
+            .catch((error) => {
+              console.error(error) // Menampilkan pesan kesalahan jika terjadi
+            })
+
+          // baseURL: "https://dkm-paramadina.vercel.app", // Ganti dengan URL base API Anda
+          // timeout: 3000, // Waktu maksimal (dalam milidetik) sebelum request dianggap timeout
+          // headers: {
+          //   "Content-Type": "application/json",
+          //   // Anda dapat menambahkan header lain sesuai kebutuhan Anda
+          // },
           // const response = await fetch("/api/testof-saveData", {
           //   method: "POST",
           //   headers: { "Content-Type": "application/json" },

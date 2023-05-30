@@ -1,6 +1,5 @@
-const now = new Date()
-const regDate = now.toLocaleString("id-ID", {
-  day: "2-digit",
-})
-const tail = regDate.toString() + now.getFullYear().toString()
-console.log(tail)
+module.exports = async function handler(req, res) {
+  const { name, valEmail, inst, role } = req.body
+  console.log(name + valEmail + inst + role)
+  res.status(200).json({ message: "Lah ini bisa pler wkwkwkk" })
+}
