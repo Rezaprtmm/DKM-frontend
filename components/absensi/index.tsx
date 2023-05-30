@@ -55,7 +55,7 @@ export const Absensi = () => {
         try {
           router.push("/succes-regist")
           const api = axios
-            .post("/api/saveData", {
+            .post("/api/iseng", {
               name,
               valEmail,
               inst,
