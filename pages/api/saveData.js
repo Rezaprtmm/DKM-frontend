@@ -13,9 +13,9 @@ const TOKEN_PATH = path.join(process.cwd(), "./token.json")
 const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 
 module.exports = async function handler(req, res) {
+  res.status(200).json({ message: "Lah ini bisa pler wkwkwkk" })
   try {
     const { name, valEmail, inst, role } = req.body
-    res.status(200).json({ message: "Lah ini bisa pler wkwkwkk" })
     const head = "DKM-REG"
     const min = 100000
     const max = 999999
