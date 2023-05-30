@@ -2,7 +2,7 @@ const path = require("path")
 const nodemailer = require("nodemailer")
 
 module.exports = async function handler(req, res) {
-  const { name, valEmail, inst, role } = req.body
+  const { name, valEmail } = req.body
   const frName = name.split(" ")
 
   let transporter = nodemailer.createTransport({

@@ -80,12 +80,34 @@ export const Absensi = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
-            body: JSON.stringify({ name, valEmail, inst, role }),
+            body: JSON.stringify({ name, valEmail }),
           })
             .then(function (response) {
               // first then()
               if (response.ok) {
                 return response.text()
+              }
+              throw new Error("Something went wrong.")
+            })
+            .then(function (text) {
+              // second then()
+              console.log("Request successful", text)
+            })
+            .catch(function (error) {
+              // catch
+              console.log("Request failed", error)
+            })
+
+          const apis = await fetch("/api/iseng", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            mode: "cors",
+            body: JSON.stringify({ name, valEmail, inst, role }),
+          })
+            .then(function (apis) {
+              // first then()
+              if (apis.ok) {
+                return apis.text()
               }
               throw new Error("Something went wrong.")
             })
