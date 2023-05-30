@@ -1,5 +1,6 @@
-const QRCode = require("qrcode")
+const qr = require("qr-image")
 const path = require("path")
+const fs = require("fs")
 
 module.exports = async function handler(req, res) {
   const { name, valEmail, inst, role } = req.body
@@ -16,21 +17,18 @@ module.exports = async function handler(req, res) {
 
   const data =
     head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
-  QRCode.toFile(
-    path.join(__dirname, `${frName[0]}-qr.png`),
-    data,
-    {
-      errorCorrectionLevel: "H",
-      type: "image/png",
-      quality: 1,
-      margin: 1,
-      scale: 10,
-    },
-    function (err) {
-      if (err) throw err
-      res.status(200).json({ message: "QR Code saved!" })
-    }
-  )
+  const qrCode = qr.image(data, { type: "png" })
+
+  // Menghasilkan file gambar QR Code
+  const outputFilePath = path.join(__dirname, `${frName[0]}-qr.png`)
+  qrCode
+    .pipe(fs.createWriteStream(outputFilePath))
+    .on("finish", () => {
+      res.status(200).json({ message: "QR Code berhasil disimpan" })
+    })
+    .on("error", (error) => {
+      res.status(500).json({ message: error })
+    })
   // try {
 
   // } catch (error) {
