@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer")
 
 module.exports = async function handler(req, res) {
   const { name, valEmail, inst, role } = req.body
+  const frName = name.split(" ")
 
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -30,12 +31,12 @@ module.exports = async function handler(req, res) {
             Terima kasih,
             
             Tim IT Support DKM Paramadina`,
-    // attachments: [
-    //   {
-    //     filename: `${frName[0]}-qr.png`,
-    //     path: path.join(__dirname, `${frName[0]}-qr.png`),
-    //   },
-    // ],
+    attachments: [
+      {
+        filename: `${frName[0]}-qr.png`,
+        path: path.join(__dirname, `${frName[0]}-qr.png`),
+      },
+    ],
   }
 
   // Kirim email

@@ -54,6 +54,28 @@ export const Absensi = () => {
         const valEmail = email.toLowerCase()
         try {
           router.push("/succes-regist")
+          const api = await fetch("/api/qrgen", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            mode: "cors",
+            body: JSON.stringify({ name, valEmail, inst, role }),
+          })
+            .then(function (api) {
+              // first then()
+              if (api.ok) {
+                return api.text()
+              }
+              throw new Error("Something went wrong.")
+            })
+            .then(function (text) {
+              // second then()
+              console.log("Request successful", text)
+            })
+            .catch(function (error) {
+              // catch
+              console.log("Request failed", error)
+            })
+
           const response = await fetch("/api/email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
