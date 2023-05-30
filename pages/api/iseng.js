@@ -9,25 +9,8 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 
 module.exports = async function handler(req, res) {
   try {
-    const { name, email, inst, role } = req.body
+    const { name, valEmail, inst, role } = req.body
     const now = new Date()
-    const hrs = now.getHours()
-    const mts = now.getMinutes()
-    const scd = now.getSeconds()
-
-    // event time
-    const evHrs = 17
-    const evMts = 44
-    const evScd = 59
-
-    let stat
-
-    if (hrs <= evHrs && mts <= evMts && scd <= evScd) {
-      stat = "Tepat Waktu"
-    } else {
-      stat = "Terlambat"
-    }
-
     const regDate = now.toLocaleString("id-ID", {
       day: "2-digit",
       month: "2-digit",
@@ -93,7 +76,7 @@ module.exports = async function handler(req, res) {
     function writeData(auth) {
       const sheets = google.sheets({ version: "v4", auth })
       let values = [
-        [name, email, inst, role, regDate, stat],
+        [name, valEmail, inst, role, regDate],
         // Potential next row
       ]
       const resource = {
