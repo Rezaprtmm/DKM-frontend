@@ -54,18 +54,26 @@ export const Absensi = () => {
         const valEmail = email.toLowerCase()
         try {
           router.push("/succes-regist")
-          const api = axios
-            .post("/api/iseng", {
-              name,
-              valEmail,
-              inst,
-              role,
+          const response = await fetch("/api/iseng", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            mode: "cors",
+            body: JSON.stringify({ name, valEmail, inst, role }),
+          })
+            .then(function (response) {
+              // first then()
+              if (response.ok) {
+                return response.text()
+              }
+              throw new Error("Something went wrong.")
             })
-            .then((response) => {
-              console.log(response.data) // Menampilkan respon dari server
+            .then(function (text) {
+              // second then()
+              console.log("Request successful", text)
             })
-            .catch((error) => {
-              console.error(error) // Menampilkan pesan kesalahan jika terjadi
+            .catch(function (error) {
+              // catch
+              console.log("Request failed", error)
             })
 
           // baseURL: "https://dkm-paramadina.vercel.app", // Ganti dengan URL base API Anda
