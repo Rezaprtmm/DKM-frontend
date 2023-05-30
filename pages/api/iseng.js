@@ -103,5 +103,5 @@ module.exports = async function handler(req, res) {
     )
   }
   authorize().then(writeData).catch(console.error)
-  res.status(200).json({ message: "Data saved on spreadsheet" })
+  res.status(200).json({ message: name + valEmail + inst + role })
 }
