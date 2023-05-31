@@ -18,20 +18,28 @@ module.exports = async function handler(req, res) {
   const data =
     head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
 
-  // Membuat instance QRCode dengan data yang diinginkan
+  const outputDirectory = "./qrcodes" // Direktori output untuk menyimpan QR code
+  const outputFilePath = `${outputDirectory}/${frName[0]}-qr.png` // Jalur file QR code
+
+  // Membuat instance QR code dengan data yang diinginkan
   const qrCode = qr.image(data, { type: "png" })
-  const outputDirectory = process.env.OUTPUT_DIRECTORY || "./qrcodes"
-  const outputFilePath = path.join(outputDirectory, frName[0] + "-qrcode.png")
+
+  // Membuat direktori output jika belum ada
+  if (!fs.existsSync(outputDirectory)) {
+    fs.mkdirSync(outputDirectory)
+  }
+
+  // Menghasilkan file gambar QR code
   const fileStream = fs.createWriteStream(outputFilePath)
 
   fileStream.on("error", (error) => {
-    console.error("Terjadi kesalahan saat menyimpan QR Code:", error)
-    res.status(500).send("Terjadi kesalahan saat menyimpan QR Code")
+    console.error("Terjadi kesalahan saat menyimpan QR code:", error)
+    res.status(500).json({ message: "QR Code Failed to saved" })
   })
 
   fileStream.on("finish", () => {
-    console.log(`QR Code berhasil disimpan sebagai ${outputFilePath}`)
-    res.status(200).send("QR Code berhasil disimpan")
+    console.log(`QR code berhasil disimpan sebagai ${outputFilePath}`)
+    res.status(200).json({ message: "QR Code saved!" })
   })
 
   qrCode.pipe(fileStream)

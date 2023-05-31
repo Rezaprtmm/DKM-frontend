@@ -4,8 +4,8 @@ const nodemailer = require("nodemailer")
 module.exports = async function handler(req, res) {
   const { name, valEmail } = req.body
   const frName = name.split(" ")
-  const outputDirectory = process.env.OUTPUT_DIRECTORY || "./qrcodes"
-  const outputFilePath = path.join(outputDirectory, frName[0] + "-qrcode.png")
+  const outputDirectory = "./qrcodes" // Direktori output untuk menyimpan QR code
+  const outputFilePath = `${outputDirectory}/${frName[0]}-qr.png` // Jalur file QR code
 
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
             Tim IT Support DKM Paramadina`,
     attachments: [
       {
-        filename: outputFilePath,
+        filename: `${frName[0]}-qr.png`,
         path: outputFilePath,
       },
     ],

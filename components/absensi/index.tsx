@@ -54,7 +54,7 @@ export const Absensi = () => {
         const valEmail = email.toLowerCase()
         try {
           router.push("/succes-regist")
-          const api = await fetch("/api/qrgen", {
+          const api = await fetch("/api/testqr", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
