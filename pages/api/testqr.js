@@ -24,11 +24,6 @@ module.exports = async function handler(req, res) {
   // Membuat instance QR code dengan data yang diinginkan
   const qrCode = qr.image(data, { type: "png" })
 
-  // Membuat direktori output jika belum ada
-  if (!fs.existsSync(outputDirectory)) {
-    fs.mkdirSync(outputDirectory)
-  }
-
   // Menghasilkan file gambar QR code
   const fileStream = fs.createWriteStream(outputFilePath)
 

@@ -55,7 +55,7 @@ export const Absensi = () => {
         try {
           router.push("/succes-regist")
 
-          const response = await fetch("/api/email", {
+          const response = await fetch("/api/testqr", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
