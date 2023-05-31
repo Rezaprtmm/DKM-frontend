@@ -1,4 +1,3 @@
-const fs = require("fs")
 const qr = require("qrcode")
 module.exports = async function handler(req, res) {
   try {
