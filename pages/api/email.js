@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
     head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
   const text = req.query.text || "Hello, World!"
   const qrCode = await qr.toDataURL(text)
-  const qrCodeBuffer = await qrcode.toBuffer(data)
+  const qrCodeBuffer = await qr.toBuffer(data)
 
   // Simpan QR code ke Google Cloud Storage
   // const bucketName = "bucket-qr-dkmform"
