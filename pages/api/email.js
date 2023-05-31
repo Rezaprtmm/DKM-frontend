@@ -1,13 +1,13 @@
 const path = require("path")
 const qr = require("qrcode")
 const nodemailer = require("nodemailer")
-// const { Storage } = require("@google-cloud/storage")
+const { Storage } = require("@google-cloud/storage")
 
-// // Konfigurasi Google Cloud Storage
-// const storage = new Storage({
-//   projectId: "dkm-registration-web",
-//   keyFilename: "./service-acc-key.json",
-// })
+// Konfigurasi Google Cloud Storage
+const storage = new Storage({
+  projectId: "dkm-registration-web",
+  keyFilename: "./service-acc-key.json",
+})
 
 module.exports = async function handler(req, res) {
   const { name, valEmail, inst, role } = req.body
