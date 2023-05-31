@@ -17,12 +17,11 @@ module.exports = async function handler(req, res) {
 
   const data =
     head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
+
+  // Membuat instance QRCode dengan data yang diinginkan
   const qrCode = qr.image(data, { type: "png" })
-
-  // Menghasilkan file gambar QR Code
   const outputDirectory = process.env.OUTPUT_DIRECTORY || "./qrcodes"
-  const outputFilePath = `${outputDirectory}/qrcode.png`
-
+  const outputFilePath = path.join(outputDirectory, frName + "-qrcode.png")
   const fileStream = fs.createWriteStream(outputFilePath)
 
   fileStream.on("error", (error) => {
