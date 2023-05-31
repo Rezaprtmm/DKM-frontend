@@ -1,13 +1,6 @@
 const path = require("path")
 const qr = require("qrcode")
 const nodemailer = require("nodemailer")
-const { Storage } = require("@google-cloud/storage")
-
-// Konfigurasi Google Cloud Storage
-const storage = new Storage({
-  projectId: "dkm-registration-web",
-  keyFilename: "./service-acc-key.json",
-})
 
 module.exports = async function handler(req, res) {
   const { name, valEmail, inst, role } = req.body
@@ -26,17 +19,13 @@ module.exports = async function handler(req, res) {
     head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
   const text = req.query.text || "Hello, World!"
   const qrCode = await qr.toDataURL(text)
-  const qrCodeBuffer = await qr.toBuffer(data)
+  const qrCodeData = await qr.toDataURL(data)
+  const base64Data = qrCodeData.replace(/^data:image\/png;base64,/, "")
+  const binaryData = Buffer.from(base64Data, "base64")
 
-  // Simpan QR code ke Google Cloud Storage
-  const bucketName = "bucket-qr-dkmform"
-  const folderName = "qrcodes"
-  const fileName = `${frName[0]}-qr.png`
-  const file = storage.bucket(bucketName).file(`${folderName}/${fileName}`)
-  await file.save(qrCodeBuffer, {
-    metadata: { contentType: "image/png" },
-    resumable: false,
-  })
+  // Gunakan binaryData sesuai kebutuhan Anda, misalnya untuk menampilkan di halaman web:
+  const qrCodeImageTag = `<img src="data:image/png;base64,${qrCodeData}" alt="QR Code" />`
+
   const dataUrl = qrCode.replace(/^data:image\/png;base64,/, "")
 
   let transporter = nodemailer.createTransport({
@@ -65,7 +54,7 @@ module.exports = async function handler(req, res) {
     //         Terima kasih,
 
     //         Tim IT Support DKM Paramadina`,
-    html: `<p>QR Code for ${frName[0]}:</p><br><img src="${qrCode}">`,
+    html: `<p>QR Code for ${frName[0]}:</p><br>${qrCodeImageTag}`,
   }
 
   // Kirim email
