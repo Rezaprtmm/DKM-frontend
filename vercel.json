@@ -1,3 +1,6 @@
 {
-  "rewrites": [{ "source": "/api/testqr", "destination": "/api/testqr.js" }]
+  "rewrites": [
+    { "source": "/api/qrcode", "destination": "/api/qrcode.js" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
 }
