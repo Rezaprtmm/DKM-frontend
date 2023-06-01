@@ -26,8 +26,6 @@ module.exports = async function handler(req, res) {
     chl: data,
   }
   const url = apiEndpoint + "?" + querystring.stringify(params)
-  res.status(200).json({ message: "QR berhasil di-generate!" })
-  console.log(url)
   // const text = req.query.text || "Hello, World!"
   // const qrCode = await qr.toDataURL(text)
   // const qrCodeData = await qr.toDataURL(data)
