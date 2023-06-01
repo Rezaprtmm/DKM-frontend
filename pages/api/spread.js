@@ -51,7 +51,7 @@ module.exports = async function handler(req, res) {
       client = await authenticate({
         scopes: SCOPES,
         keyfilePath: CREDENTIALS_PATH,
-        redirectUri: "https://dkm-paramadina.vercel.app", // Ganti dengan redirect URI yang valid
+        redirectUri: "http://localhost:3000", // Ganti dengan redirect URI yang valid
       })
       if (client.credentials) {
         await saveCredentials(client)

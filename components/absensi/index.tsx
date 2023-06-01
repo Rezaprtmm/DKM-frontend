@@ -55,52 +55,57 @@ export const Absensi = () => {
         const valEmail = email.toLowerCase()
         const min = 100000
         const max = 999999
-        const noreg = Math.floor(Math.random() * (max - min) + min).toString()
+        const rdnum = Math.floor(Math.random() * (max - min) + min).toString()
+        const now = new Date()
+        const tgl = now.toLocaleString("id-ID", {
+          day: "2-digit",
+        })
+        const noreg = tgl.toString() + rdnum + now.getFullYear().toString()
         try {
           router.push("/succes-regist")
-          const response = await fetch("/api/email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            mode: "cors",
-            body: JSON.stringify({ name, valEmail, inst, role, noreg }),
-          })
-            .then(function (response) {
-              // first then()
-              if (response.ok) {
-                return response.text()
-              }
-              throw new Error("Something went wrong.")
-            })
-            .then(function (text) {
-              // second then()
-              console.log("Request successful", text)
-            })
-            .catch(function (error) {
-              // catch
-              console.log("Request failed", error)
-            })
-
           const apis = await fetch("/api/spread", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
             body: JSON.stringify({ name, valEmail, inst, role, noreg }),
           })
-            .then(function (apis) {
-              // first then()
-              if (apis.ok) {
-                return apis.text()
-              }
-              throw new Error("Something went wrong.")
-            })
-            .then(function (text) {
-              // second then()
-              console.log("Request successful", text)
-            })
-            .catch(function (error) {
-              // catch
-              console.log("Request failed", error)
-            })
+          const response = await fetch("/api/email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            mode: "cors",
+            body: JSON.stringify({ name, valEmail, inst, role, noreg }),
+          })
+          // .then(function (response) {
+          //   // first then()
+          //   if (response.ok) {
+          //     return response.text()
+          //   }
+          //   throw new Error("Something went wrong.")
+          // })
+          // .then(function (text) {
+          //   // second then()
+          //   console.log("Request successful", text)
+          // })
+          // .catch(function (error) {
+          //   // catch
+          //   console.log("Request failed", error)
+          // })
+
+          // .then(function (apis) {
+          //   // first then()
+          //   if (apis.ok) {
+          //     return apis.text()
+          //   }
+          //   throw new Error("Something went wrong.")
+          // })
+          // .then(function (text) {
+          //   // second then()
+          //   console.log("Request successful", text)
+          // })
+          // .catch(function (error) {
+          //   // catch
+          //   console.log("Request failed", error)
+          // })
         } catch (error) {
           console.error(error) // Handle any errors
         }

@@ -6,14 +6,9 @@ module.exports = async function handler(req, res) {
   const { name, valEmail, inst, role, noreg } = req.body
   const head = "DKM-REG"
   const frName = name.split(" ")
-  const now = new Date()
-  const tgl = now.toLocaleString("id-ID", {
-    day: "2-digit",
-  })
-  const tail = tgl.toString() + noreg + now.getFullYear().toString()
 
   const data =
-    head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
+    head + "," + name + "," + valEmail + "," + inst + "," + role + "," + noreg
   const apiEndpoint = "https://chart.googleapis.com/chart"
   const params = {
     cht: "qr",
