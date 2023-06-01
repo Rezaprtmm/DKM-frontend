@@ -5,44 +5,40 @@ const https = require("https")
 const querystring = require("querystring")
 
 module.exports = async function handler(req, res) {
-  const { name, valEmail, inst, role } = req.body
+  const { name, valEmail, inst, role, noreg } = req.body
   const head = "DKM-REG"
-  const min = 100000
-  const max = 999999
-  const noreg = Math.floor(Math.random() * (max - min) + min)
   const frName = name.split(" ")
   const now = new Date()
   const tgl = now.toLocaleString("id-ID", {
     day: "2-digit",
   })
-  const tail = tgl.toString() + noreg.toString() + now.getFullYear().toString()
+  const tail = tgl.toString() + noreg + now.getFullYear().toString()
 
   const data =
     head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
   const apiEndpoint = "https://chart.googleapis.com/chart"
   const params = {
     cht: "qr",
-    chs: "300x300",
+    chs: "500x500",
     chl: data,
   }
   const url = apiEndpoint + "?" + querystring.stringify(params)
-  // const text = req.query.text || "Hello, World!"
-  // const qrCode = await qr.toDataURL(text)
-  // const qrCodeData = await qr.toDataURL(data)
-  // const base64Data = qrCodeData.replace(/^data:image\/png;base64,/, "")
-  // const binaryData = Buffer.from(base64Data, "base64")
-  const htmlContent = `
-  <h1>Selamat Datang!</h1>
-  <p>Terima kasih telah bergabung. Silakan klik <img src="${url}"></img> untuk mengakses situs kami.</p>
-`
+  const htmlContent = `<p>Kepada Yth. Saudara/i ${name},</p>
 
-  // // Gunakan binaryData sesuai kebutuhan Anda, misalnya untuk menampilkan di halaman web:
-  // const qrCodeImageTag = `<img src="${qrCodeData}" alt="QR Code" />`
-  // const qrA = `<a href="${qrCodeData}" download="${name}.png">Tekan ini untuk mendapatkan QR</a>`
-  // console.log(qrA)
-
-  // const dataUrl = qrCode.replace(/^data:image\/png;base64,/, "")
-
+  <p>Kami mengucapkan terima kasih atas partisipasi Saudara/i dalam acara $eventName yang akan dilaksanakan pada $eventDate di Universitas Paramadina Kampus Gatot Subroto. Kami sangat senang dapat menyambut kehadiran Saudara/i pada acara tersebut.</p>
+  
+  <p>Melalui email ini, kami ingin mengonfirmasi bahwa pendaftaran Saudara/i pada acara $eventName telah berhasil kami terima. Berikut terlampir QR Code yang harus Saudara/i tunjukkan ke meja registrasi. Anda dapat memperbesar QR Code nya dengan mengetuk gambar terlampir.</p>
+  
+  <p>Apabila Saudara/i memiliki pertanyaan atau butuh bantuan sehubungan dengan acara $eventName, jangan ragu untuk menghubungi kami melalui:</p>
+  
+  <p>e-mail  : muhamad.fatih@students.paramadina.ac.id, atau<br>
+  WhatsApp: 0821-2248-4581 (Muhamad Adillah Fatih).</p>
+  
+  <p>Terima kasih,</p>
+  
+  <p>Tim IT Support DKM Paramadina</p>
+  <a href="${url} download="${frName[0]}-qr.png"><img src="${url}"></img></a>
+  <p>Nomor registrasi : ${noreg}</p>`
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -56,19 +52,6 @@ module.exports = async function handler(req, res) {
     from: "dkm.tekno@gmail.com",
     to: valEmail,
     subject: "Konfirmasi Registrasi Acara ${eventName} ",
-    // text: `Kepada Yth. Saudara/i ${name},
-
-    //         Kami mengucapkan terima kasih atas partisipasi Saudara/i dalam acara $eventName yang akan dilaksanakan pada $eventDate di Universitas Paramadina Kampus Gatot Subroto. Kami sangat senang dapat menyambut kehadiran Saudara/i pada acara tersebut.
-
-    //         Melalui email ini, kami ingin mengonfirmasi bahwa pendaftaran Saudara/i pada acara $eventName telah berhasil kami terima. Berikut terlampir QR Code yang harus Saudara/i tunjukkan ke meja registrasi.
-
-    //         Apabila Saudara/i memiliki pertanyaan atau butuh bantuan sehubungan dengan acara $eventName, jangan ragu untuk menghubungi kami melalui:
-    //         e-mail  : muhamad.fatih@students.paramadina.ac.id, atau
-    //         WhatsApp: 0821-2248-4581 (Muhamad Adillah Fatih).
-
-    //         Terima kasih,
-
-    //         Tim IT Support DKM Paramadina`,
     html: htmlContent,
   }
 

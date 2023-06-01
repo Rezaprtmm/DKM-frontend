@@ -9,7 +9,7 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 
 module.exports = async function handler(req, res) {
   try {
-    const { name, valEmail, inst, role } = req.body
+    const { name, valEmail, inst, role, noreg } = req.body
     const now = new Date()
     const regDate = now.toLocaleString("id-ID", {
       day: "2-digit",
@@ -62,7 +62,7 @@ module.exports = async function handler(req, res) {
     function writeData(auth) {
       const sheets = google.sheets({ version: "v4", auth })
       let values = [
-        [name, valEmail, inst, role, regDate],
+        [name, valEmail, inst, role, regDate, noreg],
         // Potential next row
       ]
       const resource = {

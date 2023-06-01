@@ -11,6 +11,7 @@ export const Absensi = () => {
   const [inst, setInst] = useState("")
   const [role, setRole] = useState("")
   const [setBtnAct, isSetBtnAct] = useState<boolean>(false)
+
   const tempname = name.split(" ")
   const namejoin = tempname.join("")
   const regex = /^[a-zA-Z\s]+$/
@@ -52,14 +53,16 @@ export const Absensi = () => {
         toast.warning("Harap cek kembali data Anda sebelum submit")
       } else {
         const valEmail = email.toLowerCase()
+        const min = 100000
+        const max = 999999
+        const noreg = Math.floor(Math.random() * (max - min) + min).toString()
         try {
           router.push("/succes-regist")
-
           const response = await fetch("/api/email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
-            body: JSON.stringify({ name, valEmail, inst, role }),
+            body: JSON.stringify({ name, valEmail, inst, role, noreg }),
           })
             .then(function (response) {
               // first then()
@@ -81,7 +84,7 @@ export const Absensi = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
-            body: JSON.stringify({ name, valEmail, inst, role }),
+            body: JSON.stringify({ name, valEmail, inst, role, noreg }),
           })
             .then(function (apis) {
               // first then()
