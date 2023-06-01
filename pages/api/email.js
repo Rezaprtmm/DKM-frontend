@@ -1,6 +1,8 @@
 const path = require("path")
 const qr = require("qrcode")
 const nodemailer = require("nodemailer")
+const https = require("https")
+const querystring = require("querystring")
 
 module.exports = async function handler(req, res) {
   const { name, valEmail, inst, role } = req.body
@@ -17,16 +19,31 @@ module.exports = async function handler(req, res) {
 
   const data =
     head + "," + name + "," + valEmail + "," + inst + "," + role + "," + tail
-  const text = req.query.text || "Hello, World!"
-  const qrCode = await qr.toDataURL(text)
-  const qrCodeData = await qr.toDataURL(data)
-  const base64Data = qrCodeData.replace(/^data:image\/png;base64,/, "")
-  const binaryData = Buffer.from(base64Data, "base64")
+  const apiEndpoint = "https://chart.googleapis.com/chart"
+  const params = {
+    cht: "qr",
+    chs: "300x300",
+    chl: data,
+  }
+  const url = apiEndpoint + "?" + querystring.stringify(params)
+  res.status(200).json({ message: "QR berhasil di-generate!" })
+  console.log(url)
+  // const text = req.query.text || "Hello, World!"
+  // const qrCode = await qr.toDataURL(text)
+  // const qrCodeData = await qr.toDataURL(data)
+  // const base64Data = qrCodeData.replace(/^data:image\/png;base64,/, "")
+  // const binaryData = Buffer.from(base64Data, "base64")
+  const htmlContent = `
+  <h1>Selamat Datang!</h1>
+  <p>Terima kasih telah bergabung. Silakan klik <img src="${url}"></img> untuk mengakses situs kami.</p>
+`
 
-  // Gunakan binaryData sesuai kebutuhan Anda, misalnya untuk menampilkan di halaman web:
-  const qrCodeImageTag = `<img src="data:image/png;base64,${qrCodeData}" alt="QR Code" />`
+  // // Gunakan binaryData sesuai kebutuhan Anda, misalnya untuk menampilkan di halaman web:
+  // const qrCodeImageTag = `<img src="${qrCodeData}" alt="QR Code" />`
+  // const qrA = `<a href="${qrCodeData}" download="${name}.png">Tekan ini untuk mendapatkan QR</a>`
+  // console.log(qrA)
 
-  const dataUrl = qrCode.replace(/^data:image\/png;base64,/, "")
+  // const dataUrl = qrCode.replace(/^data:image\/png;base64,/, "")
 
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -54,7 +71,7 @@ module.exports = async function handler(req, res) {
     //         Terima kasih,
 
     //         Tim IT Support DKM Paramadina`,
-    html: `<p>QR Code for ${frName[0]}:</p><br>${qrCodeImageTag}`,
+    html: htmlContent,
   }
 
   // Kirim email
