@@ -60,6 +60,14 @@ export const Absensi = () => {
         const tgl = now.toLocaleString("id-ID", {
           day: "2-digit",
         })
+        const regDate = now.toLocaleString("id-ID", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
         const noreg = tgl.toString() + rdnum + now.getFullYear().toString()
         try {
           router.push("/succes-regist")
@@ -67,7 +75,14 @@ export const Absensi = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             mode: "cors",
-            body: JSON.stringify({ name, valEmail, inst, role, noreg }),
+            body: JSON.stringify({
+              name,
+              valEmail,
+              inst,
+              role,
+              noreg,
+              regDate,
+            }),
           })
           const response = await fetch("/api/email", {
             method: "POST",

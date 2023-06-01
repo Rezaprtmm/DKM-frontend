@@ -9,16 +9,7 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "./credentials.json")
 
 module.exports = async function handler(req, res) {
   try {
-    const { name, valEmail, inst, role, noreg } = req.body
-    const now = new Date()
-    const regDate = now.toLocaleString("id-ID", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    })
+    const { name, valEmail, inst, role, noreg, regDate } = req.body
 
     async function loadSavedCredentialsIfExist() {
       try {
