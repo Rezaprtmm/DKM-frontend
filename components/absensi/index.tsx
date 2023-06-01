@@ -101,46 +101,10 @@ export const Absensi = () => {
               // catch
               console.log("Request failed", error)
             })
-
-          // baseURL: "https://dkm-paramadina.vercel.app", // Ganti dengan URL base API Anda
-          // timeout: 3000, // Waktu maksimal (dalam milidetik) sebelum request dianggap timeout
-          // headers: {
-          //   "Content-Type": "application/json",
-          //   // Anda dapat menambahkan header lain sesuai kebutuhan Anda
-          // },
-          // const response = await fetch("/api/testof-saveData", {
-          //   method: "POST",
-          //   headers: { "Content-Type": "application/json" },
-          //   mode: "cors",
-          //   body: JSON.stringify({ name, valEmail, inst, role }),
-          // })
-          //   .then(function (response) {
-          //     // first then()
-          //     if (response.ok) {
-          //       return response.text()
-          //     }
-          //     throw new Error("Something went wrong.")
-          //   })
-          //   .then(function (text) {
-          //     // second then()
-          //     console.log("Request successful", text)
-          //   })
-          //   .catch(function (error) {
-          //     // catch
-          //     console.log("Request failed", error)
-          //   })
         } catch (error) {
           console.error(error) // Handle any errors
         }
       }
-
-      // const response = await axios.post("/api/saveData", {
-      //   name,
-      //   valEmail,
-      //   inst,
-      //   role,
-      // })
-      // console.log(response.data)
     }
   }
   return (

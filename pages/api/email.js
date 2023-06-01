@@ -1,5 +1,3 @@
-const path = require("path")
-const qr = require("qrcode")
 const nodemailer = require("nodemailer")
 const https = require("https")
 const querystring = require("querystring")
@@ -23,13 +21,15 @@ module.exports = async function handler(req, res) {
     chl: data,
   }
   const url = apiEndpoint + "?" + querystring.stringify(params)
+  const eventName = "Bedah Buku"
+  const eventDate = "9 Juni 2023"
   const htmlContent = `<p>Kepada Yth. Saudara/i ${name},</p>
 
-  <p>Kami mengucapkan terima kasih atas partisipasi Saudara/i dalam acara $eventName yang akan dilaksanakan pada $eventDate di Universitas Paramadina Kampus Gatot Subroto. Kami sangat senang dapat menyambut kehadiran Saudara/i pada acara tersebut.</p>
+  <p>Kami mengucapkan terima kasih atas partisipasi Saudara/i dalam acara ${eventName} yang akan dilaksanakan pada ${eventDate} di Universitas Paramadina Kampus Gatot Subroto. Kami sangat senang dapat menyambut kehadiran Saudara/i pada acara tersebut.</p>
   
-  <p>Melalui email ini, kami ingin mengonfirmasi bahwa pendaftaran Saudara/i pada acara $eventName telah berhasil kami terima. Berikut terlampir QR Code yang harus Saudara/i tunjukkan ke meja registrasi. Anda dapat memperbesar QR Code nya dengan mengetuk gambar terlampir.</p>
+  <p>Melalui email ini, kami ingin mengonfirmasi bahwa pendaftaran Saudara/i pada acara ${eventName} telah berhasil kami terima. Berikut terlampir QR Code yang harus Saudara/i tunjukkan ke meja registrasi. Anda dapat memperbesar QR Code nya dengan mengetuk gambar terlampir.</p>
   
-  <p>Apabila Saudara/i memiliki pertanyaan atau butuh bantuan sehubungan dengan acara $eventName, jangan ragu untuk menghubungi kami melalui:</p>
+  <p>Apabila Saudara/i memiliki pertanyaan atau butuh bantuan sehubungan dengan acara ${eventName}, jangan ragu untuk menghubungi kami melalui:</p>
   
   <p>e-mail  : muhamad.fatih@students.paramadina.ac.id, atau<br>
   WhatsApp: 0821-2248-4581 (Muhamad Adillah Fatih).</p>
@@ -51,24 +51,16 @@ module.exports = async function handler(req, res) {
   let mailOptions = {
     from: "dkm.tekno@gmail.com",
     to: valEmail,
-    subject: "Konfirmasi Registrasi Acara ${eventName} ",
+    subject: `Konfirmasi Registrasi Acara ${eventName}`,
     html: htmlContent,
   }
 
   // Kirim email
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      res.status(500).json({ message: "Email not sent! " + error })
+      console.log("Email not sent! Err: " + error)
     } else {
-      res.status(200).json({ message: "Email sent!" })
+      console.log("Email Sent!")
     }
   })
-
-  // try {
-
-  // } catch (error) {
-  //   console.error(error)
-  //   console.log("Terjadi kesalahan saat menyimpan data")
-  //   return false
-  // }
 }
