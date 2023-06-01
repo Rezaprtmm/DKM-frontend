@@ -75,11 +75,8 @@ module.exports = async function handler(req, res) {
   // Kirim email
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error)
       res.status(500).json({ message: "Email not sent! " + error })
     } else {
-      console.log(qrCode)
-      console.log(dataUrl)
       res.status(200).json({ message: "Email sent!" })
     }
   })
