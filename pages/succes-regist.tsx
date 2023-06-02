@@ -1,8 +1,13 @@
 import { Success } from "@/svgs/success"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
 
 export default function SuccesRegist() {
+  const router = useRouter()
+  const backTo = () => {
+    router.push("/")
+  }
   return (
     <div className="h-[100vh] w-full bg-primary-500 lg:h-[100vh]">
       <div className="absolute top-[60px] right-0 hidden md:block lg:right-[150px] lg:top-[90px]">
@@ -47,12 +52,14 @@ export default function SuccesRegist() {
                 check your email for further information. <br></br>If you
                 don&apos;t found it, please check in spam also.
               </p>
-              <Link
-                href="#"
-                className="mt-[40px] w-[267px] rounded-[20px] bg-ribbon-600 p-3 text-[16px] text-white lg:mt-[40px] lg:w-[400px] lg:text-[16px]"
+              <button
+                className="mt-[20px] rounded-[20px] bg-ribbon-600
+                p-3 px-12 text-white lg:mt-[30px]"
+                type="submit"
+                onClick={backTo}
               >
-                Back to Home
-              </Link>
+                Return to form
+              </button>
             </div>
           </div>
         </div>
