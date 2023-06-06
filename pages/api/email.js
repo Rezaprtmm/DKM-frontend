@@ -54,8 +54,10 @@ module.exports = async function handler(req, res) {
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log("Email not sent! Err: " + error)
+      res.status(500).json({ message: "Error while sendirn email" + error })
     } else {
       console.log("Email Sent!")
+      res.status(200).json({ message: "Email sent!" })
     }
   })
 }
