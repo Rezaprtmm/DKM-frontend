@@ -69,30 +69,26 @@ export const Absensi = () => {
           second: "2-digit",
         })
         const noreg = tgl.toString() + rdnum + now.getFullYear().toString()
-        try {
-          router.push("/succes-regist")
-          const apis = await fetch("/api/spread", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            mode: "cors",
-            body: JSON.stringify({
-              name,
-              valEmail,
-              inst,
-              role,
-              noreg,
-              regDate,
-            }),
-          })
-          const response = await fetch("/api/email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            mode: "cors",
-            body: JSON.stringify({ name, valEmail, inst, role, noreg }),
-          })
-        } catch (error) {
-          console.error(error) // Handle any errors
-        }
+        router.push("/succes-regist")
+        const apis = await fetch("/api/spread", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          mode: "cors",
+          body: JSON.stringify({
+            name,
+            valEmail,
+            inst,
+            role,
+            noreg,
+            regDate,
+          }),
+        })
+        const response = await fetch("/api/email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          mode: "cors",
+          body: JSON.stringify({ name, valEmail, inst, role, noreg }),
+        })
       }
     }
   }
