@@ -116,7 +116,7 @@ export const Absensi = () => {
             DKM Registration System
           </h1>
           <p className="mt-[30px] hidden text-center lg:block">
-            Event: eventName
+            Event: Bedah Buku
           </p>
           <form
             className="mt-[30px] flex flex-col pb-[60px] lg:mt-[60px] lg:pb-0"
